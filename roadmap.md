@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Replace orange theme with school blue and match the supplied Google button design.
+- [x] Replace orange theme with school blue and match the supplied Google button design; verified blue colours and narrow-screen layout.
 
 - [x] Set up student account schema and protected Google links; verified anonymous access is denied.
 - [x] Add Google sign-in with password-confirmed existing account matching and immediate new student creation.
