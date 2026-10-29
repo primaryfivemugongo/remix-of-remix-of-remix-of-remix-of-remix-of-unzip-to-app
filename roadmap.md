@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Add a school crest page-loading overlay with a spinning blue outer ring; preserve page entrances and verify navigation.
+
 - [x] Replace orange theme with school blue and match the supplied Google button design; verified blue colours and narrow-screen layout.
 
 - [x] Set up student account schema and protected Google links; verified anonymous access is denied.
