@@ -1,9 +1,10 @@
 # Roadmap
 
-- [ ] Set up student account schema and protected Google links.
-- [ ] Add Google sign-in with password-confirmed existing account matching and immediate new student creation.
-- [ ] Add secure student Google link/unlink account settings.
-- [ ] Test account rules and live sign-in/settings flows; identify any Google consent blocker.
+- [x] Set up student account schema and protected Google links; verified anonymous access is denied.
+- [x] Add Google sign-in with password-confirmed existing account matching and immediate new student creation.
+- [x] Add secure student Google link/unlink account settings.
+- [x] Test account rules, live portal login, password rejection, password save, and settings restoration.
+- [ ] Complete real Google consent, account matching/new student provisioning, and link/unlink end-to-end — blocked on interactive Google sign-in.
 
 - [x] Move playful transitions into page content; signed-in student navigation shows one entrance per new page, no outgoing-page reanimation, and no runtime errors (three tests passed).
 
