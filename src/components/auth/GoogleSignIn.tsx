@@ -42,9 +42,19 @@ export function GoogleSignIn() {
     finally { setBusy(false); }
   };
   return <>
-    <Button type="button" variant="outline" className="w-full gap-2" disabled={busy} onClick={start}>
-      {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <span aria-hidden="true" className="font-bold text-primary">G</span>}
-      Continue with Google
+    <Button type="button" className="google-sign-in w-full" disabled={busy} onClick={start}>
+      <span className="google-logo-tile" aria-hidden="true">
+        <svg className="google-logo" viewBox="0 0 48 48">
+          <path className="google-yellow" d="M43.6 20.5H42V20H24v8h11.3A12 12 0 1 1 32.8 14l5.7-5.7A20 20 0 1 0 44 24c0-1.2-.1-2.4-.4-3.5Z" />
+          <path className="google-red" d="m6.3 14.7 6.6 4.8A12 12 0 0 1 32.8 14l5.7-5.7A20 20 0 0 0 6.3 14.7Z" />
+          <path className="google-green" d="M24 44c5.2 0 9.9-2 13.5-5.2l-6.2-5.2A12 12 0 0 1 12.7 28l-6.6 5.1A20 20 0 0 0 24 44Z" />
+          <path className="google-blue" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4 5.6l6.2 5.2A20 20 0 0 0 44 24c0-1.2-.1-2.4-.4-3.5Z" />
+        </svg>
+      </span>
+      <span className="flex min-w-0 flex-1 items-center justify-center gap-2 px-2 text-base font-medium">
+        {busy && <Loader2 className="h-4 w-4 animate-spin" />}
+        Sign in with Google
+      </span>
     </Button>
     <Dialog open={matchingEmail !== null} onOpenChange={(open) => { if (!open) { setMatchingEmail(null); setPassword(""); } }}>
       <DialogContent><DialogHeader><DialogTitle>Link your existing student account</DialogTitle><DialogDescription>{matchingEmail}</DialogDescription></DialogHeader>
