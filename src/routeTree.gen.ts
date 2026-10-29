@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AccountSettingsRouteImport } from './routes/account-settings'
 import { Route as ClassesRouteImport } from './routes/classes'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as DisclaimerRouteImport } from './routes/disclaimer'
@@ -38,6 +39,7 @@ import { Route as AdminStreamsRouteImport } from './routes/admin.streams'
 import { Route as AdminStudentsRouteImport } from './routes/admin.students'
 import { Route as AdminTeachersRouteImport } from './routes/admin.teachers'
 import { Route as AdminTimetableRouteImport } from './routes/admin.timetable'
+import { Route as AuthGoogleCallbackRouteImport } from './routes/auth.google-callback'
 import { Route as ClassesSlugRouteImport } from './routes/classes_.$slug'
 import { Route as StudentIndexRouteImport } from './routes/student.index'
 import { Route as StudentAssignmentsRouteImport } from './routes/student.assignments'
@@ -105,6 +107,11 @@ const R404Route = R404RouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountSettingsRoute = AccountSettingsRouteImport.update({
+  id: '/account-settings',
+  path: '/account-settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClassesRoute = ClassesRouteImport.update({
@@ -235,6 +242,11 @@ const AdminTeachersRoute = AdminTeachersRouteImport.update({
 const AdminTimetableRoute = AdminTimetableRouteImport.update({
   id: '/admin/timetable',
   path: '/admin/timetable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthGoogleCallbackRoute = AuthGoogleCallbackRouteImport.update({
+  id: '/auth/google-callback',
+  path: '/auth/google-callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClassesSlugRoute = ClassesSlugRouteImport.update({
@@ -517,6 +529,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
+  '/account-settings': typeof AccountSettingsRoute
   '/classes': typeof ClassesRoute
   '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
@@ -542,6 +555,7 @@ export interface FileRoutesByFullPath {
   '/admin/students': typeof AdminStudentsRoute
   '/admin/teachers': typeof AdminTeachersRoute
   '/admin/timetable': typeof AdminTimetableRoute
+  '/auth/google-callback': typeof AuthGoogleCallbackRoute
   '/classes/$slug': typeof ClassesSlugRoute
   '/student/assignments': typeof StudentAssignmentsRoute
   '/student/attendance': typeof StudentAttendanceRoute
@@ -601,6 +615,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
+  '/account-settings': typeof AccountSettingsRoute
   '/classes': typeof ClassesRoute
   '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
@@ -626,6 +641,7 @@ export interface FileRoutesByTo {
   '/admin/students': typeof AdminStudentsRoute
   '/admin/teachers': typeof AdminTeachersRoute
   '/admin/timetable': typeof AdminTimetableRoute
+  '/auth/google-callback': typeof AuthGoogleCallbackRoute
   '/classes/$slug': typeof ClassesSlugRoute
   '/student/assignments': typeof StudentAssignmentsRoute
   '/student/attendance': typeof StudentAttendanceRoute
@@ -686,6 +702,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/about': typeof AboutRoute
+  '/account-settings': typeof AccountSettingsRoute
   '/classes': typeof ClassesRoute
   '/cookies': typeof CookiesRoute
   '/disclaimer': typeof DisclaimerRoute
@@ -711,6 +728,7 @@ export interface FileRoutesById {
   '/admin/students': typeof AdminStudentsRoute
   '/admin/teachers': typeof AdminTeachersRoute
   '/admin/timetable': typeof AdminTimetableRoute
+  '/auth/google-callback': typeof AuthGoogleCallbackRoute
   '/classes_/$slug': typeof ClassesSlugRoute
   '/student/assignments': typeof StudentAssignmentsRoute
   '/student/attendance': typeof StudentAttendanceRoute
@@ -772,6 +790,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/about'
+    | '/account-settings'
     | '/classes'
     | '/cookies'
     | '/disclaimer'
@@ -797,6 +816,7 @@ export interface FileRouteTypes {
     | '/admin/students'
     | '/admin/teachers'
     | '/admin/timetable'
+    | '/auth/google-callback'
     | '/classes/$slug'
     | '/student/assignments'
     | '/student/attendance'
@@ -856,6 +876,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/about'
+    | '/account-settings'
     | '/classes'
     | '/cookies'
     | '/disclaimer'
@@ -881,6 +902,7 @@ export interface FileRouteTypes {
     | '/admin/students'
     | '/admin/teachers'
     | '/admin/timetable'
+    | '/auth/google-callback'
     | '/classes/$slug'
     | '/student/assignments'
     | '/student/attendance'
@@ -940,6 +962,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/about'
+    | '/account-settings'
     | '/classes'
     | '/cookies'
     | '/disclaimer'
@@ -965,6 +988,7 @@ export interface FileRouteTypes {
     | '/admin/students'
     | '/admin/teachers'
     | '/admin/timetable'
+    | '/auth/google-callback'
     | '/classes_/$slug'
     | '/student/assignments'
     | '/student/attendance'
@@ -1025,6 +1049,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   R404Route: typeof R404Route
   AboutRoute: typeof AboutRoute
+  AccountSettingsRoute: typeof AccountSettingsRoute
   ClassesRoute: typeof ClassesRoute
   CookiesRoute: typeof CookiesRoute
   DisclaimerRoute: typeof DisclaimerRoute
@@ -1050,6 +1075,7 @@ export interface RootRouteChildren {
   AdminStudentsRoute: typeof AdminStudentsRoute
   AdminTeachersRoute: typeof AdminTeachersRoute
   AdminTimetableRoute: typeof AdminTimetableRoute
+  AuthGoogleCallbackRoute: typeof AuthGoogleCallbackRoute
   ClassesSlugRoute: typeof ClassesSlugRoute
   StudentAssignmentsRoute: typeof StudentAssignmentsRoute
   StudentAttendanceRoute: typeof StudentAttendanceRoute
@@ -1127,6 +1153,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account-settings': {
+      id: '/account-settings'
+      path: '/account-settings'
+      fullPath: '/account-settings'
+      preLoaderRoute: typeof AccountSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/classes': {
@@ -1309,6 +1342,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/timetable'
       fullPath: '/admin/timetable'
       preLoaderRoute: typeof AdminTimetableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/google-callback': {
+      id: '/auth/google-callback'
+      path: '/auth/google-callback'
+      fullPath: '/auth/google-callback'
+      preLoaderRoute: typeof AuthGoogleCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/classes_/$slug': {
@@ -1689,6 +1729,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   R404Route: R404Route,
   AboutRoute: AboutRoute,
+  AccountSettingsRoute: AccountSettingsRoute,
   ClassesRoute: ClassesRoute,
   CookiesRoute: CookiesRoute,
   DisclaimerRoute: DisclaimerRoute,
@@ -1714,6 +1755,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminStudentsRoute: AdminStudentsRoute,
   AdminTeachersRoute: AdminTeachersRoute,
   AdminTimetableRoute: AdminTimetableRoute,
+  AuthGoogleCallbackRoute: AuthGoogleCallbackRoute,
   ClassesSlugRoute: ClassesSlugRoute,
   StudentAssignmentsRoute: StudentAssignmentsRoute,
   StudentAttendanceRoute: StudentAttendanceRoute,
