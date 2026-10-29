@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Add a school crest page-loading overlay with a spinning blue outer ring; preserve page entrances and verify navigation.
+- [x] Add school crest page-loading overlay with spinning blue outer ring; verified delayed page navigation on desktop and phone, no runtime errors, and all three routing/entrance tests passed.
 
 - [x] Replace orange theme with school blue and match the supplied Google button design; verified blue colours and narrow-screen layout.
 
