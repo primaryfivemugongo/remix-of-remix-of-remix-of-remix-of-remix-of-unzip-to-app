@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, useLocation } from "@/lib/router-compat";
 import { useAuth } from "@/hooks/useAuth";
-import { Loader2 } from "lucide-react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -26,11 +25,8 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
   }, [location]);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
+    // The shared school crest overlay covers session restoration.
+    return <div className="min-h-screen" aria-busy="true" />;
   }
 
   if (!user || !userRole) {

@@ -16,6 +16,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { SchoolLoadingOverlay } from "@/components/SchoolLoadingOverlay";
 import NotFound from "@/pages/NotFound";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -109,6 +110,7 @@ function RootComponent() {
         <AuthProvider>
           <ScrollToTop />
           <Outlet />
+          <SchoolLoadingOverlay />
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
