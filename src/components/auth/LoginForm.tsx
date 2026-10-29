@@ -14,6 +14,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { verifyPupilLogin } from "@/lib/auth.functions";
 import { useServerFn } from "@tanstack/react-start";
+import { GoogleSignIn } from "./GoogleSignIn";
 import { school } from "@/lib/school";
 import { Checkbox } from "@/components/ui/checkbox";
 import { 
@@ -318,6 +319,9 @@ export function LoginForm({ schoolLogo }: LoginFormProps) {
               "Sign In"
             )}
           </Button>
+
+          <div className="relative py-1 text-center text-xs text-muted-foreground"><span className="bg-card px-2">or</span></div>
+          <GoogleSignIn />
           
           <div className="flex items-center justify-center">
             <Dialog open={showPasswordRecovery} onOpenChange={setShowPasswordRecovery}>

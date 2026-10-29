@@ -293,6 +293,24 @@ export type Database = {
         }
         Relationships: []
       }
+      portal_auth_attempts: {
+        Row: {
+          attempt_key: string
+          attempts: number
+          started_at: string
+        }
+        Insert: {
+          attempt_key: string
+          attempts?: number
+          started_at?: string
+        }
+        Update: {
+          attempt_key?: string
+          attempts?: number
+          started_at?: string
+        }
+        Relationships: []
+      }
       streams: {
         Row: {
           class_id: string | null
@@ -319,6 +337,35 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      student_google_accounts: {
+        Row: {
+          auth_user_id: string
+          google_email: string
+          linked_at: string
+          student_id: string
+        }
+        Insert: {
+          auth_user_id: string
+          google_email: string
+          linked_at?: string
+          student_id: string
+        }
+        Update: {
+          auth_user_id?: string
+          google_email?: string
+          linked_at?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_google_accounts_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: true
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       students: {
         Row: {
@@ -424,7 +471,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      connect_student_google: {
+        Args: {
+          p_auth_user_id: string
+          p_email: string
+          p_name: string
+          p_student_id?: string
+        }
+        Returns: string
+      }
+      consume_portal_auth_attempt: { Args: { p_key: string }; Returns: boolean }
     }
     Enums: {
       [_ in never]: never

@@ -6,6 +6,8 @@ import { useNavigate } from "@/lib/router-compat";
 import { PersonalInfo } from "@/components/profile/PersonalInfoWithDatabase";
 import { DangerZone } from "@/components/profile/DangerZone";
 import { PhotoDialog } from "@/components/ui/photo-dialog";
+import { Button } from "@/components/ui/button";
+import { GoogleAccountSettings } from "@/components/profile/GoogleAccountSettings";
 
 export default function UserProfile() {
   const { userRole, userName, photoUrl, signOut, personalEmail, user } = useAuth();
@@ -46,11 +48,11 @@ export default function UserProfile() {
         />
 
         {/* Danger Zone - Editable Security Settings */}
-        <DangerZone 
+        {userRole === "student" ? <><Button variant="outline" onClick={() => navigate("/account-settings")}>Account settings</Button><GoogleAccountSettings /></> : <DangerZone 
           personalEmail={personalEmail}
           userId={user?.id}
           userRole={userRole}
-        />
+        />}
       </div>
     </DashboardLayout>
   );

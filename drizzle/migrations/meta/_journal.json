@@ -1,5 +1,20 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1793239281080,
+      "tag": "0000_secure_student_google_accounts",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793239699199,
+      "tag": "0001_restrict_google_link_access",
+      "breakpoints": true
+    }
+  ]
 }
