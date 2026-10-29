@@ -1,4 +1,4 @@
-import { useSession, setResponseHeader } from "@tanstack/react-start/server";
+import { useSession, setResponseHeader, getRequestUrl } from "@tanstack/react-start/server";
 
 export type PortalRole = "student" | "teacher" | "admin";
 type SessionData = { studentId?: string; role?: PortalRole; userId?: string; pendingGoogleLink?: { studentId: string; expiresAt: number } };
@@ -7,7 +7,9 @@ export async function getPortalSession() {
   const password = process.env['PUPIL_SESSION_SECRET'];
   if (!password) throw new Error("Sign-in is temporarily unavailable");
   setResponseHeader("Cache-Control", "no-store");
-  return useSession<SessionData>({ password, name: "p5-orange-session", maxAge: 60 * 60 * 24, cookie: { httpOnly: true, sameSite: "none", secure: true, partitioned: true } });
+  const url = new URL(getRequestUrl());
+  const localHttp = url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
+  return useSession<SessionData>({ password, name: "p5-orange-session", maxAge: 60 * 60 * 24, cookie: { httpOnly: true, sameSite: localHttp ? "lax" : "none", secure: !localHttp, partitioned: !localHttp } });
 }
 
 export async function requireStudentSession() {
