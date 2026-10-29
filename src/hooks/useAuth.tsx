@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (active) setIsLoading(false);
       }
     };
-    const onStorage = () => { void restore(); };
+    const onStorage = () => { setIsLoading(true); void restore(); };
     window.addEventListener("storage", onStorage);
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, nextSession) => {
       if (active) setSession(nextSession);
