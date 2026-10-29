@@ -2,6 +2,56 @@
 @source "../src";
 @config "../tailwind.config.ts";
 
+/* Legacy orange accent utilities follow the school brand palette. */
+@theme {
+  --color-orange-50: oklch(0.97 0.014 254);
+  --color-orange-100: oklch(0.932 0.032 255);
+  --color-orange-200: oklch(0.882 0.059 254);
+  --color-orange-300: oklch(0.809 0.105 252);
+  --color-orange-400: oklch(0.707 0.165 254);
+  --color-orange-500: oklch(0.623 0.214 259);
+  --color-orange-600: oklch(0.546 0.245 263);
+  --color-orange-700: oklch(0.488 0.243 264);
+  --color-orange-800: oklch(0.424 0.199 266);
+  --color-orange-900: oklch(0.379 0.146 266);
+  --color-orange-950: oklch(0.282 0.091 268);
+}
+
+:root {
+  --google-button: #4285f4;
+  --google-button-hover: #3367d6;
+  --google-button-foreground: #ffffff;
+  --google-logo-surface: #ffffff;
+  --google-blue: #4285f4;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc05;
+  --google-green: #34a853;
+}
+
+.google-sign-in {
+  background: var(--google-button);
+  color: var(--google-button-foreground);
+  height: 52px;
+  padding: 4px;
+  gap: 0;
+  border-radius: 8px;
+}
+.google-sign-in:hover { background: var(--google-button-hover); }
+.google-logo-tile {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  height: 44px;
+  border-radius: 5px;
+  background: var(--google-logo-surface);
+}
+.google-sign-in .google-logo { width: 24px; height: 24px; }
+.google-blue { fill: var(--google-blue); }
+.google-red { fill: var(--google-red); }
+.google-yellow { fill: var(--google-yellow); }
+.google-green { fill: var(--google-green); }
+
+
 
 @layer base {
   :root {
@@ -11,10 +61,10 @@
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 25 100% 60%;
+    --primary: 217 89% 45%;
     --primary-foreground: 0 0% 98%;
-    --primary-hover: 25 95% 53%;
-    --primary-glow: 25 100% 70%;
+    --primary-hover: 217 89% 38%;
+    --primary-glow: 217 89% 65%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
     --muted: 0 0% 96.1%;
@@ -56,10 +106,10 @@
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 25 100% 60%;
-    --primary-foreground: 0 0% 9%;
-    --primary-hover: 25 95% 53%;
-    --primary-glow: 25 100% 70%;
+    --primary: 217 89% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 217 89% 38%;
+    --primary-glow: 217 89% 65%;
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 14.9%;
@@ -95,34 +145,34 @@
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --background: 25 20% 4%;
-      --foreground: 25 10% 96%;
-      --card: 25 20% 8%;
-      --card-foreground: 25 10% 96%;
-      --popover: 25 20% 8%;
-      --popover-foreground: 25 10% 96%;
-      --primary: 25 100% 60%;
-      --primary-foreground: 25 20% 4%;
-      --primary-hover: 25 95% 53%;
-      --primary-glow: 25 100% 70%;
-      --secondary: 25 20% 15%;
-      --secondary-foreground: 25 10% 96%;
-      --muted: 25 20% 15%;
-      --muted-foreground: 25 10% 60%;
-      --accent: 25 30% 20%;
-      --accent-foreground: 25 10% 96%;
+      --background: 217 12% 4%;
+      --foreground: 217 8% 96%;
+      --card: 217 12% 8%;
+      --card-foreground: 217 8% 96%;
+      --popover: 217 12% 8%;
+      --popover-foreground: 217 8% 96%;
+      --primary: 217 89% 45%;
+      --primary-foreground: 0 0% 100%;
+      --primary-hover: 217 89% 38%;
+      --primary-glow: 217 89% 65%;
+      --secondary: 217 12% 15%;
+      --secondary-foreground: 217 8% 96%;
+      --muted: 217 12% 15%;
+      --muted-foreground: 217 8% 60%;
+      --accent: 217 20% 20%;
+      --accent-foreground: 217 8% 96%;
       --destructive: 0 62.8% 30.6%;
       --destructive-foreground: 0 0% 98%;
-      --border: 25 20% 15%;
-      --input: 25 20% 15%;
-      --ring: 25 100% 60%;
-      --sidebar-background: 25 20% 6%;
-      --sidebar-foreground: 25 10% 96%;
-      --sidebar-primary: 25 10% 96%;
-      --sidebar-primary-foreground: 25 20% 4%;
-      --sidebar-accent: 25 20% 12%;
-      --sidebar-accent-foreground: 25 10% 96%;
-      --sidebar-border: 25 50% 25%;
+      --border: 217 12% 15%;
+      --input: 217 12% 15%;
+      --ring: 217 89% 45%;
+      --sidebar-background: 217 12% 6%;
+      --sidebar-foreground: 217 8% 96%;
+      --sidebar-primary: 217 8% 96%;
+      --sidebar-primary-foreground: 217 12% 4%;
+      --sidebar-accent: 217 12% 12%;
+      --sidebar-accent-foreground: 217 8% 96%;
+      --sidebar-border: 217 30% 25%;
       --sidebar-ring: 25 100% 60%;
     }
   }
