@@ -36,147 +36,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [personalEmail, setPersonalEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    // Browser storage is only a hint; identity always comes from the server cookie.
-    const checkAuthState = () => {
-      const hasToken = ['admin', 'teacher', 'student'].some(
-        (r) => localStorage.getItem(`${r}Token`) && localStorage.getItem(`${r}Role`) === r
-      );
-      if (!hasToken) return false;
-      setIsLoading(true);
-      getPupilSession().then((s) => {
-        if (!s) {
-          ['admin', 'teacher', 'student'].forEach((r) =>
-            ['Token', 'Role', 'Name', 'Id', 'Email', 'Verified', 'PersonalEmail', 'PhotoUrl'].forEach((k) => localStorage.removeItem(`${r}${k}`))
-          );
-          setUser(null);
-          setUserRole(null);
-          return;
-        }
-        setUserRole(s.role);
-        setUserName(s.name);
-        setUser({ id: s.id, email: s.email } as User);
-        setIsVerified(s.is_verified);
-        setPhotoUrl(s.photo_url);
-        setPersonalEmail(s.personal_email);
-      }).catch(() => {
-        setUser(null);
-        setUserRole(null);
-      }).finally(() => setIsLoading(false));
-      return true;
-    };
-    
-    // Check auth state on mount
-    const hasCustomAuth = checkAuthState();
-    
-    // SECURITY: Listen for storage changes (handles cross-tab and new logins)
-    const handleStorageChange = (e: StorageEvent) => {
-      // If any auth-related key changed, re-check auth state
-      if (e.key?.includes('Token') || e.key?.includes('Role') || e.key === null) {
-        checkAuthState();
+    let active = true;
+    const restore = async () => {
+      try {
+        const portal = await getPupilSession();
+        if (!active) return;
+        setUser(portal ? { id: portal.id, email: portal.email } as User : null);
+        setUserRole(portal?.role ?? null);
+        setUserName(portal?.name ?? "");
+        setPhotoUrl(portal?.photo_url ?? null);
+        setIsVerified(portal?.is_verified ?? false);
+        setPersonalEmail(portal?.personal_email ?? null);
+      } catch {
+        if (active) { setUser(null); setUserRole(null); }
+      } finally {
+        if (active) setIsLoading(false);
       }
     };
-    
-    window.addEventListener('storage', handleStorageChange);
-    
-    // Set up auth state listener FIRST for normal users
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        // Only update if we don't have custom auth (admin/teacher/student tokens)
-        if (!localStorage.getItem('adminToken') && 
-            !localStorage.getItem('teacherToken') && 
-            !localStorage.getItem('studentToken')) {
-          setSession(session);
-          setUser(session?.user ?? null);
-          
-          // Fetch user profile and role when authenticated
-          if (session?.user) {
-            setTimeout(() => {
-              fetchUserProfile(session.user.id);
-            }, 0);
-          } else {
-            setUserRole(null);
-            setUserName("");
-          }
-        }
-      }
-    );
-
-    // THEN check for existing Supabase session only if no custom auth
-    if (!hasCustomAuth) {
-      supabase.auth.getSession()
-        .then(({ data: { session } }) => {
-          setSession(session);
-          setUser(session?.user ?? null);
-          if (session?.user) {
-            fetchUserProfile(session.user.id);
-          }
-        })
-        .catch((error) => {
-          console.error('Error getting session:', error);
-          setSession(null);
-          setUser(null);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-      subscription.unsubscribe();
-    };
+    const onStorage = () => { void restore(); };
+    window.addEventListener("storage", onStorage);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      if (active) setSession(nextSession);
+      if (event === "SIGNED_OUT") void restore();
+    });
+    void restore();
+    return () => { active = false; subscription.unsubscribe(); window.removeEventListener("storage", onStorage); };
   }, []);
-
-  const fetchUserProfile = async (userId: string) => {
-    try {
-      // For students, fetch from students table
-      const { data: student, error: studentError } = await supabase
-        .from('students')
-        .select('name, photo_url')
-        .eq('id', userId)
-        .single();
-
-      if (!studentError && student) {
-        setUserName(student.name || "");
-        setUserRole('student');
-        setPhotoUrl(student.photo_url || null);
-        return;
-      }
-
-      // For teachers, fetch from teachers table
-      const { data: teacher, error: teacherError } = await supabase
-        .from('teachers')
-        .select('name, photo_url, personal_email, is_verified')
-        .eq('id', userId)
-        .single();
-
-      if (!teacherError && teacher) {
-        setUserName(teacher.name || "");
-        setUserRole('teacher');
-        setPhotoUrl(teacher.photo_url || null);
-        setPersonalEmail(teacher.personal_email || null);
-        setIsVerified(teacher.is_verified || false);
-        return;
-      }
-
-      // For admins, fetch from admins table
-      const { data: admin, error: adminError } = await supabase
-        .from('admins')
-        .select('name, personal_email, is_verified')
-        .eq('id', userId)
-        .single();
-
-      if (!adminError && admin) {
-        setUserName(admin.name || "");
-        setUserRole('admin');
-        setPersonalEmail(admin.personal_email || null);
-        setIsVerified(admin.is_verified || false);
-        return;
-      }
-    } catch (error) {
-      console.error('Error fetching user profile:', error);
-    }
-  };
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -228,7 +113,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
     
     // Only sign out from Supabase if there's a real session
-    if (session) {
+    {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     }
