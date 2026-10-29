@@ -12,6 +12,13 @@ export const loginWithGoogle = createServerFn({ method: "POST" })
     const identity = await verifiedGoogleIdentity();
     const session = await getPortalSession();
     if (session.data.pendingGoogleLink) throw new Error("Finish linking Google in your account settings first.");
+    // A Gmail linked in profile settings signs straight into that school account (any role).
+    const { findAccountByLinkedGmail, portalLoginResult } = await import("./recovery.server");
+    const linked = await findAccountByLinkedGmail(identity.email);
+    if (linked) {
+      await session.update({ role: linked.role, userId: linked.id, studentId: linked.role === "student" ? linked.id : undefined });
+      return { ...portalLoginResult(linked), created: false };
+    }
     const result = await resolveGoogleStudent(googleRepository, identity, data.password);
     if (result.status === "password-required") return { success: false as const, passwordRequired: true as const, email: result.email, message: "Enter your existing portal password to link Google." };
     await session.update({ role: "student", userId: result.student.id, studentId: result.student.id });

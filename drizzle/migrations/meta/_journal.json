@@ -15,6 +15,13 @@
       "when": 1793239699199,
       "tag": "0001_restrict_google_link_access",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793242152141,
+      "tag": "0002_lock_staff_credentials",
+      "breakpoints": true
     }
   ]
 }
