@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { lovable } from "@/integrations/lovable";
 import { loginWithGoogle } from "@/lib/google.functions";
@@ -17,6 +17,11 @@ export function GoogleSignIn() {
   const [busy, setBusy] = useState(false);
   const [matchingEmail, setMatchingEmail] = useState<string | null>(null);
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    const email = sessionStorage.getItem("google-match-email");
+    sessionStorage.removeItem("google-match-email");
+    if (email) setMatchingEmail(email);
+  }, []);
   const finish = async (portalPassword?: string) => {
     const result = await complete({ data: { password: portalPassword } });
     if (!result.success) { setMatchingEmail(result.email); return; }

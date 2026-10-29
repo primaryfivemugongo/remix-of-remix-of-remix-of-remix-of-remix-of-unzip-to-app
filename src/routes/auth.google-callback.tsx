@@ -34,7 +34,7 @@ function GoogleCallback() {
       if (!data.session) throw new Error("Google sign-in did not complete.");
       if (intent === "link") { await link(); navigate("/account-settings", { replace: true }); return; }
       const result = await login({ data: {} });
-      if (!result.success) { toast.info(result.message); navigate("/login", { replace: true }); return; }
+      if (!result.success) { sessionStorage.setItem("google-match-email", result.email); toast.info(result.message); navigate("/login", { replace: true }); return; }
       cachePortalLogin(result); navigate("/student", { replace: true });
     })().catch((error) => { toast.error(error instanceof Error ? error.message : "Google sign-in failed."); navigate(intent === "link" ? "/account-settings" : "/login", { replace: true }); });
   }, [intent, link, login, navigate]);
