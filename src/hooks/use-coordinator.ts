@@ -7,7 +7,7 @@ export type Candidate = {
   position: string; experience: string | null; manifesto: string; photo_url: string | null; manifesto_photos: string[];
   youtube_url: string | null; status: string; created_at: string; view_count: number; votes: number;
 };
-export function useUser() { const { user, isLoading } = useAuth(); return { user, ready: !isLoading }; }
+export function useUser() { const { user, isLoading, userName, photoUrl, signOut, userRole } = useAuth(); return { user, ready: !isLoading, name: userName, photoUrl, signOut, userRole }; }
 export function useCandidates(refetchInterval: number | false = false) {
   const { user, ready } = useUser();
   return useQuery({ queryKey: ["candidates", user?.id], enabled: ready && !!user, refetchInterval,

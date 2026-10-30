@@ -2,6 +2,20 @@
 @source "../src";
 @config "../tailwind.config.ts";
 
+@theme inline {
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-election: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+.election-shell { font-family: var(--font-election); letter-spacing: 0; }
+.election-shell h1, .election-shell h2, .election-shell h3 { overflow-wrap: anywhere; }
+.election-shell input { min-width: 0; }
+.election-tab[aria-current="page"] { background: var(--gradient-primary); color: hsl(var(--primary-foreground)); }
+.election-tab:not([aria-current="page"]) { color: hsl(var(--muted-foreground)); }
+:root { --shadow-election: 0 10px 30px -12px hsl(var(--primary) / 0.4); }
+@utility shadow-election { box-shadow: var(--shadow-election); }
+@media (prefers-reduced-motion: reduce) { .election-shell .animate-page-in { animation: none; } }
+
 /* Legacy orange accent utilities follow the school brand palette. */
 @theme {
   --color-orange-50: oklch(0.97 0.014 254);
