@@ -1,0 +1,2 @@
+REVOKE ALL ON public.coordinator_settings,public.coordinator_applications,public.coordinator_votes,public.coordinator_commission_roles FROM anon,authenticated;
+REVOKE ALL ON FUNCTION public.validate_coordinator_vote() FROM PUBLIC,anon,authenticated;
