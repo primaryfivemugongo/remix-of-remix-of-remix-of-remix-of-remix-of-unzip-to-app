@@ -95,7 +95,7 @@ export default function StatusPage() {
         </div>
       )}
 
-      <Link to={userRole === "student" ? "/student/profile" : userRole === "admin" ? "/admin/profile" : "/teacher/profile"} className="mt-6 block rounded-full border border-primary/60 py-3 text-center">School account settings</Link>
+      <Link to={userRole === "student" ? "/student/profile" : "/profile"} className="mt-6 block rounded-full border border-primary/60 py-3 text-center">School account settings</Link>
       <Button variant="ghost" onClick={async () => { await qc.cancelQueries(); qc.clear(); await signOut(); }} className="mt-6 flex w-full items-center justify-center gap-2 rounded-full border border-destructive/50 py-3 text-destructive">
         <LogOut className="h-4 w-4" /> Sign out
       </Button>
