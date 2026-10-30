@@ -101,6 +101,172 @@ export type Database = {
         }
         Relationships: []
       }
+      coordinator_applications: {
+        Row: {
+          age: number | null
+          class_name: string
+          created_at: string
+          experience: string | null
+          id: string
+          manifesto: string
+          manifesto_photos: string[]
+          photo_url: string | null
+          position: string
+          status: string
+          stream_name: string | null
+          student_name: string
+          updated_at: string
+          user_id: string | null
+          view_count: number
+          youtube_url: string | null
+        }
+        Insert: {
+          age?: number | null
+          class_name: string
+          created_at?: string
+          experience?: string | null
+          id?: string
+          manifesto?: string
+          manifesto_photos?: string[]
+          photo_url?: string | null
+          position: string
+          status?: string
+          stream_name?: string | null
+          student_name: string
+          updated_at?: string
+          user_id?: string | null
+          view_count?: number
+          youtube_url?: string | null
+        }
+        Update: {
+          age?: number | null
+          class_name?: string
+          created_at?: string
+          experience?: string | null
+          id?: string
+          manifesto?: string
+          manifesto_photos?: string[]
+          photo_url?: string | null
+          position?: string
+          status?: string
+          stream_name?: string | null
+          student_name?: string
+          updated_at?: string
+          user_id?: string | null
+          view_count?: number
+          youtube_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coordinator_applications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coordinator_commission_roles: {
+        Row: {
+          created_at: string
+          granted_by: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          granted_by: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          granted_by?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coordinator_commission_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      coordinator_settings: {
+        Row: {
+          announcement: string | null
+          applications_open: boolean
+          id: number
+          page_views: number
+          results_public: boolean
+          updated_at: string
+          voting_ends_at: string | null
+          voting_open: boolean
+          voting_starts_at: string | null
+        }
+        Insert: {
+          announcement?: string | null
+          applications_open?: boolean
+          id?: number
+          page_views?: number
+          results_public?: boolean
+          updated_at?: string
+          voting_ends_at?: string | null
+          voting_open?: boolean
+          voting_starts_at?: string | null
+        }
+        Update: {
+          announcement?: string | null
+          applications_open?: boolean
+          id?: number
+          page_views?: number
+          results_public?: boolean
+          updated_at?: string
+          voting_ends_at?: string | null
+          voting_open?: boolean
+          voting_starts_at?: string | null
+        }
+        Relationships: []
+      }
+      coordinator_votes: {
+        Row: {
+          application_id: string
+          created_at: string
+          id: string
+          position: string
+          voter_id: string
+        }
+        Insert: {
+          application_id: string
+          created_at?: string
+          id?: string
+          position: string
+          voter_id: string
+        }
+        Update: {
+          application_id?: string
+          created_at?: string
+          id?: string
+          position?: string
+          voter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "coordinator_votes_application_id_position_fkey"
+            columns: ["application_id", "position"]
+            isOneToOne: false
+            referencedRelation: "coordinator_applications"
+            referencedColumns: ["id", "position"]
+          },
+          {
+            foreignKeyName: "coordinator_votes_voter_id_fkey"
+            columns: ["voter_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       electoral_applications: {
         Row: {
           age: number | null
@@ -481,6 +647,10 @@ export type Database = {
         Returns: string
       }
       consume_portal_auth_attempt: { Args: { p_key: string }; Returns: boolean }
+      coordinator_record_view: {
+        Args: { _candidate?: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
