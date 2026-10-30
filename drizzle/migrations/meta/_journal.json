@@ -29,6 +29,13 @@
       "when": 1793333965456,
       "tag": "0003_replace_voting_with_coordinator_elections",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793334000189,
+      "tag": "0004_lock_coordinator_browser_access",
+      "breakpoints": true
     }
   ]
 }
