@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import ElectoralDashboard from "@/pages/admin/ElectoralDashboard";
+import ElectoralDashboard from "@/pages/coordinator/Candidates";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { RoleBasedRoute } from "@/components/auth/RoleBasedRoute";
 
 export const Route = createFileRoute("/student/electoral/")({
   head: () => ({
@@ -20,9 +19,8 @@ export const Route = createFileRoute("/student/electoral/")({
 function Page() {
   return (
     <ProtectedRoute>
-                  <RoleBasedRoute allowedRoles={["student"]}>
                     <ElectoralDashboard />
-                  </RoleBasedRoute>
+                  
                 </ProtectedRoute>
   );
 }

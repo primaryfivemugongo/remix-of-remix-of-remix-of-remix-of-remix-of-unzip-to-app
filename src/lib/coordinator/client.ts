@@ -27,7 +27,7 @@ class ElectionQuery implements PromiseLike<Reply> {
 }
 export const supabase = {
   from: (table: ConstructorParameters<typeof ElectionQuery>[0]) => new ElectionQuery(table),
-  async rpc(name: Parameters<typeof electionRpc>[0]["data"]["name"], args?: Record<string, unknown>): Promise<Reply> {
+  async rpc(name: "get_vote_counts" | "get_turnout" | "has_role" | "record_page_view" | "record_candidate_view" | "admin_list_users", args?: Record<string, unknown>): Promise<Reply> {
     try { const result = await electionRpc({ data: { name, args } }); return { data: result.data, error: result.error ? { message: result.error.message } : null }; }
     catch (error) { return { data: null, error: { message: error instanceof Error ? error.message : "Election request failed." } }; }
   },

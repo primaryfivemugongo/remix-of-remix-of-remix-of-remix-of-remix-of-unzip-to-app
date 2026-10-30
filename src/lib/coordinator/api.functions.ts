@@ -58,7 +58,8 @@ export const electionRequest = createServerFn({ method: "POST" })
       if (data.action === "delete") { requireCommission(); return db.from("coordinator_votes").delete().not("id", "is", null); }
       if (data.action !== "insert" || role !== "student") throw new Error("Only pupils can cast a ballot.");
       const vote = z.object({ application_id: z.string().uuid(), position: z.string() }).parse(data.values);
-      return db.from("coordinator_votes").insert({ ...vote, voter_id: id });
+      if (!vote.application_id || !vote.position) throw new Error("Choose a candidate and position.");
+      return db.from("coordinator_votes").insert({ application_id: vote.application_id, position: vote.position, voter_id: id });
     }
     if (data.table === "electoral_applications") {
       if (data.action === "select") {
@@ -91,9 +92,10 @@ export const electionRequest = createServerFn({ method: "POST" })
       }
       if (!commission && !canSubmitApplication(role, settings.applications_open, current?.status)) throw new Error("Applications are closed or your application has already been reviewed.");
       const app = applicationSchema.parse(data.values);
+      if (!app.student_name || !app.class_name || !app.position) throw new Error("Complete your candidate details.");
       // A pupil cannot use the name selector to impersonate another registered pupil.
       if (!commission && app.student_name.toLowerCase() !== account.name.toLowerCase()) throw new Error("Choose your own registered pupil name.");
-      const row = { ...app, user_id: commission && data.action === "insert" ? null : id, status: commission && data.action === "insert" ? "approved" : "pending", updated_at: new Date().toISOString() };
+      const row = { ...app, student_name: app.student_name, class_name: app.class_name, position: app.position, user_id: commission && data.action === "insert" ? null : id, status: commission && data.action === "insert" ? "approved" : "pending", updated_at: new Date().toISOString() };
       return data.action === "insert" ? db.from("coordinator_applications").insert(row) : db.from("coordinator_applications").update(row).eq("id", String(targetId));
     }
     if (data.table === "user_roles") {

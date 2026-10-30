@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Apply from "@/pages/electoral/Apply";
+import Apply from "@/pages/coordinator/Apply";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 export const Route = createFileRoute("/student/electoral/apply")({

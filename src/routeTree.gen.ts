@@ -92,6 +92,7 @@ import { Route as TeacherElectoralApplicationsRouteImport } from './routes/teach
 import { Route as TeacherEntertainmentIndexRouteImport } from './routes/teacher.entertainment.index'
 import { Route as TeacherEntertainmentMovieIdRouteImport } from './routes/teacher.entertainment.$movieId'
 import { Route as AdminAttendanceStudentStudentIdRouteImport } from './routes/admin.attendance.student.$studentId'
+import { Route as StudentElectoralCandidateIdRouteImport } from './routes/student.electoral.candidate.$id'
 import { Route as StudentElectoralCandidatesPositionRouteImport } from './routes/student.electoral.candidates.$position'
 
 const IndexRoute = IndexRouteImport.update({
@@ -518,6 +519,12 @@ const AdminAttendanceStudentStudentIdRoute =
     path: '/admin/attendance/student/$studentId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const StudentElectoralCandidateIdRoute =
+  StudentElectoralCandidateIdRouteImport.update({
+    id: '/student/electoral/candidate/$id',
+    path: '/student/electoral/candidate/$id',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const StudentElectoralCandidatesPositionRoute =
   StudentElectoralCandidatesPositionRouteImport.update({
     id: '/student/electoral/candidates/$position',
@@ -609,6 +616,7 @@ export interface FileRoutesByFullPath {
   '/teacher/electoral/': typeof TeacherElectoralIndexRoute
   '/teacher/entertainment/': typeof TeacherEntertainmentIndexRoute
   '/admin/attendance/student/$studentId': typeof AdminAttendanceStudentStudentIdRoute
+  '/student/electoral/candidate/$id': typeof StudentElectoralCandidateIdRoute
   '/student/electoral/candidates/$position': typeof StudentElectoralCandidatesPositionRoute
 }
 export interface FileRoutesByTo {
@@ -695,6 +703,7 @@ export interface FileRoutesByTo {
   '/teacher/electoral': typeof TeacherElectoralIndexRoute
   '/teacher/entertainment': typeof TeacherEntertainmentIndexRoute
   '/admin/attendance/student/$studentId': typeof AdminAttendanceStudentStudentIdRoute
+  '/student/electoral/candidate/$id': typeof StudentElectoralCandidateIdRoute
   '/student/electoral/candidates/$position': typeof StudentElectoralCandidatesPositionRoute
 }
 export interface FileRoutesById {
@@ -782,6 +791,7 @@ export interface FileRoutesById {
   '/teacher/electoral/': typeof TeacherElectoralIndexRoute
   '/teacher/entertainment/': typeof TeacherEntertainmentIndexRoute
   '/admin/attendance/student/$studentId': typeof AdminAttendanceStudentStudentIdRoute
+  '/student/electoral/candidate/$id': typeof StudentElectoralCandidateIdRoute
   '/student/electoral/candidates/$position': typeof StudentElectoralCandidatesPositionRoute
 }
 export interface FileRouteTypes {
@@ -870,6 +880,7 @@ export interface FileRouteTypes {
     | '/teacher/electoral/'
     | '/teacher/entertainment/'
     | '/admin/attendance/student/$studentId'
+    | '/student/electoral/candidate/$id'
     | '/student/electoral/candidates/$position'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -956,6 +967,7 @@ export interface FileRouteTypes {
     | '/teacher/electoral'
     | '/teacher/entertainment'
     | '/admin/attendance/student/$studentId'
+    | '/student/electoral/candidate/$id'
     | '/student/electoral/candidates/$position'
   id:
     | '__root__'
@@ -1042,6 +1054,7 @@ export interface FileRouteTypes {
     | '/teacher/electoral/'
     | '/teacher/entertainment/'
     | '/admin/attendance/student/$studentId'
+    | '/student/electoral/candidate/$id'
     | '/student/electoral/candidates/$position'
   fileRoutesById: FileRoutesById
 }
@@ -1129,6 +1142,7 @@ export interface RootRouteChildren {
   TeacherElectoralIndexRoute: typeof TeacherElectoralIndexRoute
   TeacherEntertainmentIndexRoute: typeof TeacherEntertainmentIndexRoute
   AdminAttendanceStudentStudentIdRoute: typeof AdminAttendanceStudentStudentIdRoute
+  StudentElectoralCandidateIdRoute: typeof StudentElectoralCandidateIdRoute
   StudentElectoralCandidatesPositionRoute: typeof StudentElectoralCandidatesPositionRoute
 }
 
@@ -1715,6 +1729,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAttendanceStudentStudentIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/student/electoral/candidate/$id': {
+      id: '/student/electoral/candidate/$id'
+      path: '/student/electoral/candidate/$id'
+      fullPath: '/student/electoral/candidate/$id'
+      preLoaderRoute: typeof StudentElectoralCandidateIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/student/electoral/candidates/$position': {
       id: '/student/electoral/candidates/$position'
       path: '/student/electoral/candidates/$position'
@@ -1809,6 +1830,7 @@ const rootRouteChildren: RootRouteChildren = {
   TeacherElectoralIndexRoute: TeacherElectoralIndexRoute,
   TeacherEntertainmentIndexRoute: TeacherEntertainmentIndexRoute,
   AdminAttendanceStudentStudentIdRoute: AdminAttendanceStudentStudentIdRoute,
+  StudentElectoralCandidateIdRoute: StudentElectoralCandidateIdRoute,
   StudentElectoralCandidatesPositionRoute:
     StudentElectoralCandidatesPositionRoute,
 }

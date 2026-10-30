@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import BallotGeneration from "@/pages/admin/BallotGeneration";
+import BallotGeneration from "@/pages/coordinator/Commission";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { RoleBasedRoute } from "@/components/auth/RoleBasedRoute";
 

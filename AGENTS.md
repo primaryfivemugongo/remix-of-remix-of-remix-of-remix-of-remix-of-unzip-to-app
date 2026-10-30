@@ -20,3 +20,4 @@
 - Google student identities are linked through a server-only link table and database functions; account matching, creation and linking stay server-side so client data never proves identity.
 - Legacy orange Tailwind colour utilities are mapped to the school-brand palette in global CSS so imported pages share the current theme without changing functional colour-category data.
 - The school crest is held in three copies — `src/assets/class-crest.png.asset.json` (login page + account menu), `public/header.png` (PDF letterhead banner) and `public/school-logo.png` (PDF watermark) — replace all three together so printed and on-screen branding never diverge.
+- Coordinator election pages use the imported presentation through a portal navigation/request adapter; all election reads and writes authorize encrypted school sessions server-side, because portal accounts are not Auth identities.
