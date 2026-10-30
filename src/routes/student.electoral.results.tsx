@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import LiveResults from "@/pages/electoral/LiveResults";
+import LiveResults from "@/pages/coordinator/Results";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { RoleBasedRoute } from "@/components/auth/RoleBasedRoute";
 
 export const Route = createFileRoute("/student/electoral/results")({
+  validateSearch: (s: Record<string, unknown>) => ({ position: typeof s.position === "string" ? s.position : undefined }),
   head: () => ({
     meta: [
       { title: "Student \u00b7 Electoral \u00b7 Results | Kyengera Parents' School - Mugongo" },
@@ -20,9 +20,8 @@ export const Route = createFileRoute("/student/electoral/results")({
 function Page() {
   return (
     <ProtectedRoute>
-                  <RoleBasedRoute allowedRoles={["student"]}>
                     <LiveResults />
-                  </RoleBasedRoute>
+                  
                 </ProtectedRoute>
   );
 }
